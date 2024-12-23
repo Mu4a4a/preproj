@@ -51,7 +51,7 @@ func (h *Handler) getAllProducts(c *gin.Context) {
 	}
 
 	if len(products) == 0 {
-		c.JSON(http.StatusNotFound, []models.Product{})
+		c.JSON(http.StatusOK, []models.Product{})
 		return
 	}
 	c.JSON(http.StatusOK, products)
@@ -79,7 +79,7 @@ func (h *Handler) updateProduct(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "user updated", "id": updatedProductID})
+	c.JSON(http.StatusOK, gin.H{"message": "product updated", "id": updatedProductID})
 }
 
 func (h *Handler) deleteProduct(c *gin.Context) {
@@ -95,5 +95,5 @@ func (h *Handler) deleteProduct(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "product deleted successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "product deleted"})
 }

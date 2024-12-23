@@ -1,4 +1,4 @@
-package PreProject0
+package prepoj
 
 import (
 	"context"
