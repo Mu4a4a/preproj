@@ -1,0 +1,23 @@
+portHTTP: ":8000"
+portGRPC: ":50051"
+
+db:
+  dbname: "postgres"
+  user: "postgres"
+  password: "qwerty"
+  host: "pp-db"
+  port: "5432"
+  SSLMode: "disable"
+
+cache:
+  addr: "pp-cache:6379"
+  password: ""
+  user: ""
+  db: "0"
+  maxRetries: "5"
+  dialTimeout: "10"
+  timeout: "5"
+
+ttl:
+  GRPC: 5s
+  HTTP: 7s

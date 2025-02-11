@@ -1,27 +1,30 @@
 package repository
 
 import (
+	"context"
 	"database/sql"
+	"errors"
 	"fmt"
+	"log/slog"
+	"preproj/internal/config"
+	"time"
 )
 
-type Config struct {
-	Host     string
-	Port     string
-	User     string
-	Password string
-	DBName   string
-	SSLMode  string
-}
+func NewPostgresDB() (*sql.DB, error) {
+	cfg := config.LoadPostgresConfig()
 
-func NewPostgresDB(cfg Config) (*sql.DB, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 	db, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.DBName, cfg.SSLMode))
 	if err != nil {
-		return nil, err
+		slog.Error("failed to open database connection", slog.Any("error", err))
+		return nil, errors.New("failed to open database connection")
 	}
-	err = db.Ping()
+	err = db.PingContext(ctx)
 	if err != nil {
-		return nil, err
+		slog.Error("failed to ping database", slog.Any("error", err))
+		_ = db.Close()
+		return nil, fmt.Errorf("failed to ping database: %w", err)
 	}
 
 	return db, nil

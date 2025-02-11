@@ -1,0 +1,46 @@
+services:
+  app:
+    container_name: pp-app
+    build: ./
+    command: ./preproj
+    ports:
+      - "8080:8080"
+      - "50051:50051"
+    depends_on:
+      - db
+      - cache
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=qwerty
+      - POSTGRES_DB=postgres
+    networks:
+      - pp
+
+
+  db:
+    container_name: pp-db
+    restart: always
+    image: postgres:17.2
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=qwerty
+      - POSTGRES_DB=postgres
+    networks:
+          - pp
+
+
+  cache:
+    container_name: pp-cache
+    restart: always
+    image: redis:7.4.1
+    ports:
+      - "6379:6379"
+    networks:
+      - pp
+
+networks:
+  pp:
+    driver: bridge
+    name: pp

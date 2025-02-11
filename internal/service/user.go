@@ -1,8 +1,9 @@
 package service
 
 import (
+	"context"
+	"preproj/internal/models"
 	"preproj/internal/repository"
-	"preproj/models"
 )
 
 type UserService struct {
@@ -13,27 +14,22 @@ func NewUserService(repo repository.User) *UserService {
 	return &UserService{repo: repo}
 }
 
-func (u *UserService) Create(user *models.User) (int64, error) {
-	return u.repo.Create(user)
+func (u *UserService) Create(ctx context.Context, user *models.User) (int64, error) {
+	return u.repo.Create(ctx, user)
 }
 
-func (u *UserService) GetByID(id int64) (*models.User, error) {
-	return u.repo.GetByID(id)
+func (u *UserService) GetByID(ctx context.Context, id int64) (*models.User, error) {
+	return u.repo.GetByID(ctx, id)
 }
 
-func (u *UserService) Update(user *models.User) (int64, error) {
-	return u.repo.Update(user)
+func (u *UserService) Update(ctx context.Context, user models.User) (int64, error) {
+	return u.repo.Update(ctx, user)
 }
 
-func (u *UserService) Delete(id int64) error {
-	return u.repo.Delete(id)
+func (u *UserService) Delete(ctx context.Context, id int64) error {
+	return u.repo.Delete(ctx, id)
 }
 
-func (u *UserService) GetAll() ([]*models.User, error) {
-	return u.repo.GetAll()
+func (u *UserService) GetAll(ctx context.Context) ([]models.User, error) {
+	return u.repo.GetAll(ctx)
 }
-
-// TODO: сложные запросы
-/*func (u *UserService) Create(user *models.User) (int64, error) {
-	return u.repo.Create(user)
-}*/

@@ -1,7 +1,7 @@
 -- +goose Up
 -- +goose StatementBegin
 CREATE TABLE users (
-    id serial not null primary key,
+    id serial primary key,
     name varchar(255) not null,
     email varchar(255) not null unique,
     created_at timestamp not null,
@@ -9,7 +9,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE products (
-    id serial not null primary key,
+    id serial primary key,
     name varchar(255) not null,
     description varchar(255) not null,
     price float not null,

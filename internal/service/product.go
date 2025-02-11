@@ -1,8 +1,9 @@
 package service
 
 import (
+	"context"
+	"preproj/internal/models"
 	"preproj/internal/repository"
-	"preproj/models"
 )
 
 type ProductService struct {
@@ -13,22 +14,26 @@ func NewProductService(repo repository.Product) *ProductService {
 	return &ProductService{repo: repo}
 }
 
-func (u *ProductService) Create(product *models.Product) (int64, error) {
-	return u.repo.Create(product)
+func (u *ProductService) Create(ctx context.Context, product *models.Product) (int64, error) {
+	return u.repo.Create(ctx, product)
 }
 
-func (u *ProductService) GetByID(id int64) (*models.Product, error) {
-	return u.repo.GetByID(id)
+func (u *ProductService) GetByID(ctx context.Context, id int64) (*models.Product, error) {
+	return u.repo.GetByID(ctx, id)
 }
 
-func (u *ProductService) Update(product *models.Product) (int64, error) {
-	return u.repo.Update(product)
+func (u *ProductService) Update(ctx context.Context, product models.Product) (int64, error) {
+	return u.repo.Update(ctx, product)
 }
 
-func (u *ProductService) Delete(id int64) error {
-	return u.repo.Delete(id)
+func (u *ProductService) Delete(ctx context.Context, id int64) error {
+	return u.repo.Delete(ctx, id)
 }
 
-func (u *ProductService) GetAll() ([]*models.Product, error) {
-	return u.repo.GetAll()
+func (u *ProductService) GetAll(ctx context.Context) ([]models.Product, error) {
+	return u.repo.GetAll(ctx)
+}
+
+func (u *ProductService) GetAllByUserID(ctx context.Context, userID int64) ([]models.Product, error) {
+	return u.repo.GetAllByUserID(ctx, userID)
 }
