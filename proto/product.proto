@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/product";
+
+message Product {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  float price = 4;
+  int64 user_id = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  float price = 3;
+  int64 userid = 4;
+}
+
+message CreateProductResponse {
+  int64 id = 1;
+}
+
+message GetProductRequest {
+  int64 id = 1;
+}
+
+message GetProductResponse {
+  Product Product = 1;
+}
+
+message GetProductsRequest {}
+
+message GetProductsResponse {
+  repeated Product products = 1;
+}
+
+message DeleteProductRequest {
+  int64 id = 1;
+}
+
+message DeleteProductResponse {}
+
+message UpdateProductRequest {
+  Product product = 1;
+}
+
+message UpdateProductResponse {
+  int64 id = 1;
+}
+
+message GetAllProductsByUserIDRequest {
+  int64 user_id = 1;
+}
+
+message GetAllProductsByUserIDResponse {
+  repeated Product products = 1;
+}
+
+service ProductService {
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse);
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+  rpc GetAllProducts(GetProductsRequest) returns (GetProductsResponse);
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse);
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse);
+  rpc GetAllProductsByUserID(GetAllProductsByUserIDRequest) returns(GetAllProductsByUserIDResponse);
+}
